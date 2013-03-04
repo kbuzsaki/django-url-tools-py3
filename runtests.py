@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+from os.path import dirname, abspath
 
 from django.conf import settings, global_settings
 
@@ -12,6 +13,7 @@ if not settings.configured:
         DATABASES={
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': '%s/test.db' % dirname(abspath(__file__)),
             }
         },
         INSTALLED_APPS=[
@@ -22,11 +24,6 @@ if not settings.configured:
         SITE_ID=1,
     )
 
-
-import sys
-from os.path import dirname, abspath
-from optparse import OptionParser
-from django.test.simple import DjangoTestSuiteRunner
 
 def runtests(*test_args, **kwargs):
     if 'south' in settings.INSTALLED_APPS:
