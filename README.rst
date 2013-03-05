@@ -60,11 +60,11 @@ query parameters, and the fragment identifiers.
 
 The class has following properties:
 
- + ``path``: URL's path without query string and fragment identifier
- + ``fragment``: URL's fragment identifier (without the pound character ``#``)
- + ``query_dict``: ``QueryDict`` instance containing the URL's query parameters
- + ``query``: similar to ``query_dict`` but also does more when assigning
- + ``query_string``: URL's query string
++ ``path``: URL's path without query string and fragment identifier
++ ``fragment``: URL's fragment identifier (without the pound character ``#``)
++ ``query_dict``: ``QueryDict`` instance containing the URL's query parameters
++ ``query``: similar to ``query_dict`` but also does more when assigning
++ ``query_string``: URL's query string
 
 UrlHelper.path
 --------------
