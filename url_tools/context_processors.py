@@ -27,3 +27,18 @@ class UrlHelper(object):
                 self.query_dict.setlist(key, [iri_to_uri(v) for v in val])
             else:
                 self.query_dict[key] = iri_to_uri(val)
+
+    def get_path(self):
+        return self.path
+
+    def get_full_path(self, **kwargs):
+        query_string = self.get_query_string(**kwargs)
+        if query_string:
+            query_string = '?%s' % query_string
+        fragment = self.fragment and '#%s' % iri_to_uri(self.fragment) or ''
+
+        return '%s%s%s' % (
+            iri_to_uri(self.path),
+            query_string,
+            fragment
+        )

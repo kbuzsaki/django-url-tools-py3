@@ -41,3 +41,28 @@ class UrlHelperTestCase(TestCase):
         u = UrlHelper('/foo')
         u.update_query_data(redir='/foo/bar/')
         self.assertEqual(u.get_query_string(safe='/'), 'redir=/foo/bar/')
+
+    def test_with_query_params_in_url(self):
+        u = UrlHelper('/foo')
+        u.update_query_data(redir='/foo/bar/?q=Mickey+Mouse')
+        self.assertEqual(u.get_query_string(safe='/'),
+                         'redir=/foo/bar/%3Fq%3DMickey%2BMouse')
+
+    def test_get_path(self):
+        u = UrlHelper('/foo')
+        self.assertEqual(u.get_path(), '/foo')
+
+    def test_get_full_path_with_no_querystring(self):
+        u = UrlHelper('/foo')
+        self.assertEqual(u.get_full_path(), '/foo')
+
+    def test_get_full_path(self):
+        u = UrlHelper('/foo')
+        u.update_query_data(foo=1)
+        self.assertEqual(u.get_full_path(), '/foo?foo=1')
+
+    def test_retains_fragment(self):
+        u = UrlHelper('/foo#bar')
+        u.update_query_data(foo=1)
+        self.assertEqual(u.get_full_path(), '/foo?foo=1#bar')
+
