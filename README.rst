@@ -47,7 +47,7 @@ UrlHelper class
 
 ``UrlHelper`` class implements all methods for manipulating URLs that are used
 in other parts of this app. You can also use this class directly by importing
-it from the ``herlper`` module::
+it from the ``helper`` module::
 
     from url_tools.helper import UrlHelper
 
