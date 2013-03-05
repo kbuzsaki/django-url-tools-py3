@@ -95,3 +95,9 @@ class UrlHelperTestCase(TestCase):
         u = UrlHelper('/foo/bar?foo=1&bar=2#foo')
         self.assertEqual(u.get_full_quoted_path(),
                          '/foo/bar%3Ffoo%3D1%26bar%3D2%23foo')
+
+    def test_use_as_string(self):
+        u = UrlHelper('/foo/bar')
+        u.query = dict(foo=1, bar=2)
+        u.fragment = 'baz'
+        self.assertEqual(str(u), '/foo/bar?foo=1&bar=2#baz')

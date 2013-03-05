@@ -67,3 +67,5 @@ class UrlHelper(object):
     def query_string(self, value):
         self.query_dict = QueryDict(value, mutable=True)
 
+    def __str__(self):
+        return self.get_full_path()
