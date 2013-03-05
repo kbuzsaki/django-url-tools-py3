@@ -8,7 +8,7 @@ register = template.Library()
 
 
 @register.assignment_tag
-def with_url_params(url, **kwargs):
+def url_params(url, **kwargs):
     u = UrlHelper(url)
     u.update_query_data(**kwargs)
     return u.get_full_path()
