@@ -39,7 +39,7 @@ class UrlHelper(object):
         fragment = self.fragment and '#%s' % iri_to_uri(self.fragment) or ''
 
         return '%s%s%s' % (
-            iri_to_uri(self.path),
+            iri_to_uri(self.get_path()),
             query_string,
             fragment
         )
