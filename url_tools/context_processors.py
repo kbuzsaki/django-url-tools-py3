@@ -56,3 +56,11 @@ class UrlHelper(object):
         self.query_dict = QueryDict('', mutable=True)
         self.update_query_data(**value)
 
+    @property
+    def query_string(self):
+        return self.get_query_string()
+
+    @query_string.setter
+    def query_string(self, value):
+        self.query_dict = QueryDict(value, mutable=True)
+
