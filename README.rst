@@ -30,7 +30,7 @@ Configuring your Django project
 
 To use the context processor, add the following to the middlewares stack::
 
-    MIDDLE_CLASSES = (
+    MIDDLEWARE_CLASSES = (
         ...
         'url_tools.context_processors.CurrentUrlProcessor',
     )
