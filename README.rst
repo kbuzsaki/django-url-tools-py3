@@ -53,10 +53,10 @@ it from the ``helper`` module::
 
 ``UrlHelper`` constructor accepts only one argument, which is the full path of
 the URL you want to manipulate. Although we can technically make ``UrlHelper``
-deal with full absolute URLs, we have opted to, instead, implement only methods
-for dealing with paths instead. Therefore, if you pass UrlHelper an full URL
-with scheme, host, port, and user credentials, it would still only use the
-path, query parameters, and the fragment identifiers.
+deal with full absolute URLs, we have opted to implement only methods for
+dealing with paths instead. Therefore, if you pass UrlHelper an full URL with
+scheme, host, port, and user credentials, it would still only use the path,
+query parameters, and the fragment identifiers.
 
 The class has following properties:
 
