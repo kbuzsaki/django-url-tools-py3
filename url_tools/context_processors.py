@@ -42,3 +42,17 @@ class UrlHelper(object):
             query_string,
             fragment
         )
+
+    @property
+    def query(self):
+        return self.get_query_data()
+
+    @query.setter
+    def query(self, value):
+        if not hasattr(value, '__getitem__'):
+            raise ValueError(
+                'Query can only be set to mapping type (like dict)'
+            )
+        self.query_dict = QueryDict('', mutable=True)
+        self.update_query_data(**value)
+

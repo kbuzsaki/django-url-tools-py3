@@ -66,3 +66,12 @@ class UrlHelperTestCase(TestCase):
         u.update_query_data(foo=1)
         self.assertEqual(u.get_full_path(), '/foo?foo=1#bar')
 
+    def test_query_property(self):
+        u = UrlHelper('/foo?foo=1')
+        self.assertEqual(u.query['foo'], '1')
+
+    def test_query_setter(self):
+        u = UrlHelper('/foo')
+        u.query = dict(foo=1)
+        self.assertEqual(u.query['foo'], '1')
+
