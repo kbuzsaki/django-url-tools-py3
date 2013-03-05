@@ -14,8 +14,8 @@ class UrlHelper(object):
         self.fragment = r.fragment
         self.query_dict = QueryDict(r.query, mutable=True)
 
-    def get_query_string(self):
-        return self.query_dict.urlencode()
+    def get_query_string(self, **kwargs):
+        return self.query_dict.urlencode(**kwargs)
 
     def get_query_data(self):
         return self.query_dict

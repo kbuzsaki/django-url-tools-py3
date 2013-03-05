@@ -37,3 +37,7 @@ class UrlHelperTestCase(TestCase):
         u.update_query_data(foo=[1, 2, 3])
         self.assertEqual(u.get_query_string(), 'foo=1&foo=2&foo=3')
 
+    def test_safe_slash_argument(self):
+        u = UrlHelper('/foo')
+        u.update_query_data(redir='/foo/bar/')
+        self.assertEqual(u.get_query_string(safe='/'), 'redir=/foo/bar/')
