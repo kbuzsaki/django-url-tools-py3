@@ -33,7 +33,7 @@ To use the context processor, add the following to the middlewares stack::
         'url_tools.context_processors.CurrentUrlProcessor',
     )
 
- If you want to use the template tags, add ``url_tools`` to installed apps::
+If you want to use the template tags, add ``url_tools`` to installed apps::
 
     INSTALLED_APPS = (
         ...
