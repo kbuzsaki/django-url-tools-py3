@@ -32,3 +32,8 @@ class UrlHelperTestCase(TestCase):
         u.update_query_data(foo=2)
         self.assertEqual(u.get_query_string(), 'foo=2&bar=2')
 
+    def test_get_query_with_multiple_values(self):
+        u = UrlHelper('/foo')
+        u.update_query_data(foo=[1, 2, 3])
+        self.assertEqual(u.get_query_string(), 'foo=1&foo=2&foo=3')
+
