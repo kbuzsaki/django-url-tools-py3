@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from django.test import TestCase
+from unittest import TestCase
 
 from url_tools.helper import UrlHelper
 
