@@ -2,7 +2,9 @@
 Django URL tools
 ================
 
-Django helper tools for dealing with URLs in templates.
+------------------------------------------------------
+Django helper tools for dealing with URLs in templates
+------------------------------------------------------
 
 .. contents::
 
