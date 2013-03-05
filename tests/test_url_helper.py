@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 
-from url_tools.context_processors import UrlHelper
+from url_tools.helper import UrlHelper
 
 
 class UrlHelperTestCase(TestCase):
