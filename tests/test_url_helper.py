@@ -75,6 +75,12 @@ class UrlHelperTestCase(TestCase):
         u.query = dict(foo=1)
         self.assertEqual(u.query['foo'], '1')
 
+    def test_query_setter_with_string(self):
+        u = UrlHelper('/foo')
+        u.query = 'foo=1&bar=2'
+        self.assertEqual(u.query['foo'], '1')
+        self.assertEqual(u.query['bar'], '2')
+
     def test_query_string_property(self):
         u = UrlHelper('/foo?foo=1&bar=2')
         self.assertEqual(u.query_string, 'foo=1&bar=2')

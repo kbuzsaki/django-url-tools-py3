@@ -53,12 +53,11 @@ class UrlHelper(object):
 
     @query.setter
     def query(self, value):
-        if not hasattr(value, '__getitem__'):
-            raise ValueError(
-                'Query can only be set to mapping type (like dict)'
-            )
-        self.query_dict = QueryDict('', mutable=True)
-        self.update_query_data(**value)
+        if type(value) is dict:
+            self.query_dict = QueryDict('', mutable=True)
+            self.update_query_data(**value)
+        else:
+            self.query_dict = QueryDict(value, mutable=True)
 
     @property
     def query_string(self):
