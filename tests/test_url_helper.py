@@ -26,3 +26,9 @@ class UrlHelperTestCase(TestCase):
         u.update_query_data(foo=[1,2,3])
         self.assertEqual(u.get_query_data()['foo'], '3')
         self.assertEqual(u.get_query_data().getlist('foo'), ['1', '2', '3'])
+
+    def test_get_query_string_after_modification(self):
+        u = UrlHelper('/foo?foo=1&bar=2')
+        u.update_query_data(foo=2)
+        self.assertEqual(u.get_query_string(), 'foo=2&bar=2')
+

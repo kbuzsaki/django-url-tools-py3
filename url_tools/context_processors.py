@@ -11,12 +11,11 @@ class UrlHelper(object):
         # parse the path
         r = urlparse.urlparse(full_path)
         self.path = r.path
-        self.query = r.query
         self.fragment = r.fragment
-        self.query_dict = QueryDict(self.query, mutable=True)
+        self.query_dict = QueryDict(r.query, mutable=True)
 
     def get_query_string(self):
-        return self.query
+        return self.query_dict.urlencode()
 
     def get_query_data(self):
         return self.query_dict
