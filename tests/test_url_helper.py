@@ -84,3 +84,8 @@ class UrlHelperTestCase(TestCase):
         u.query_string = 'foo=1&bar=2'
         self.assertEqual(u.query['foo'], '1')
         self.assertEqual(u.query['bar'], '2')
+
+    def test_get_full_quoted_path(self):
+        u = UrlHelper('/foo/bar?foo=1&bar=2#foo')
+        self.assertEqual(u.get_full_quoted_path(),
+                         '/foo/bar%3Ffoo%3D1%26bar%3D2%23foo')

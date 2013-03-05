@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+import urllib
 import urlparse
 
 from django.http.request import QueryDict
@@ -42,6 +43,9 @@ class UrlHelper(object):
             query_string,
             fragment
         )
+
+    def get_full_quoted_path(self, **kwargs):
+        return urllib.quote_plus(self.get_full_path(**kwargs), safe='/')
 
     @property
     def query(self):
