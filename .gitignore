@@ -1,3 +1,5 @@
 *.py[oc]
 *.sw[op]
 *.db
+dist
+MANIFEST
