@@ -30,9 +30,9 @@ Configuring your Django project
 
 To use the context processor, add the following to the middlewares stack::
 
-    MIDDLEWARE_CLASSES = (
+    TEMPLATE_CONTEXT_PROCESSORS = (
         ...
-        'url_tools.context_processors.CurrentUrlProcessor',
+        'url_tools.context_processors.current_url',
     )
 
 If you want to use the template tags, add ``url_tools`` to installed apps::
@@ -158,15 +158,15 @@ UrlHelper.get_full_quoted_path(**kwargs)
 Same as ``UrlHelper.get_full_path()`` method, but returns the full path quoted
 so that it can be used as an URL parameter value.
 
-Middleware
-==========
+ContextProcessors
+=================
 
-CurrentUrlProcessor
--------------------
+current_url
+-----------
 
-The ``CurrentUrlProcessor`` will add a new variable to the template's context.
-This variable is called ``current_url``, and it's an ``UrlHelper`` instance.
-Therefore, this variable has all the properties and methods of the
+The ``current_url`` context processor will add a new variable to the template's
+context.  This variable is called ``current_url``, and it's an ``UrlHelper``
+instance.  Therefore, this variable has all the properties and methods of the
 ``UrlHelper`` class. For instance, if we are currently on ``/foo/bar?baz=1``
 path, you can do the following in a template::
 
