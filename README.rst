@@ -231,10 +231,32 @@ arguments. For instance, if we are on a page at ``/foo``, we can use this tag::
 
 and the output would be::
 
-    ``/foo?foo=bar``
+    /foo?foo=bar
 
 Existing URL parameters are overridden by the ones specified as keyword
 arguments.
+
+{% del_params %}
+----------------
+
+This tag outputs a path stripped of specified parameters, or all query 
+parameters if none are specified. For example, if we are on the
+``/foo?bar=1&baz=2`` URL::
+
+    {% del_param request.get_full_path 'bar' %}
+
+outputs::
+
+    /foo?baz=2
+
+and ::
+
+    {% del_params request.get_full_path %}
+
+outputs::
+
+    /foo
+
 
 {% url_params %}
 ----------------
