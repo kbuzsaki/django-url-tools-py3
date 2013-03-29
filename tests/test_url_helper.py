@@ -116,3 +116,14 @@ class UrlHelperTestCase(TestCase):
         u = UrlHelper('/foo/bar')
         u.query = dict(foo=1)
         self.assertEqual(u.hash, '06f0a42bdd474f053fb1343165a31d42')
+
+    def test_delete_key(self):
+        u = UrlHelper('/foo/bar?foo=1&bar=2')
+        u.del_param('foo')
+        self.assertEqual(u.get_full_path(), '/foo/bar?bar=2')
+
+    def test_delete_multiple_keys(self):
+        u = UrlHelper('/foo/bar?foo=1&bar=2')
+        u.del_params('foo', 'bar')
+        self.assertEqual(u.get_full_path(), '/foo/bar')
+

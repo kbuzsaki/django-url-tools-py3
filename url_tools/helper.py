@@ -51,6 +51,16 @@ class UrlHelper(object):
     def get_full_quoted_path(self, **kwargs):
         return urllib.quote_plus(self.get_full_path(**kwargs), safe='/')
 
+    def del_param(self, param):
+        try:
+            del self.query_dict[param]
+        except KeyError:
+            pass # Fail silently
+
+    def del_params(self, *params):
+        for param in params:
+            self.del_param(param)
+
     @property
     def hash(self):
         if self._hash:
