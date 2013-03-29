@@ -7,6 +7,13 @@ from ..helper import UrlHelper
 register = template.Library()
 
 
+@register.simple_tag
+def add_params(url, **kwargs):
+    url = UrlHelper(url)
+    url.update_query_data(**kwargs)
+    return url.get_full_path()
+
+
 @register.assignment_tag
 def url_params(url, **kwargs):
     u = UrlHelper(url)
