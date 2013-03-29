@@ -127,3 +127,8 @@ class UrlHelperTestCase(TestCase):
         u.del_params('foo', 'bar')
         self.assertEqual(u.get_full_path(), '/foo/bar')
 
+    def test_delete_fails_silently(self):
+        u = UrlHelper('/foo/bar?foo=1&bar=2')
+        u.del_params('foo', 'baz')  # baz doesn't exist
+        self.assertEqual(u.get_full_path(), '/foo/bar?bar=2')
+
