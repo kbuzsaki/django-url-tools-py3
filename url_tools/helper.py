@@ -2,12 +2,15 @@ from __future__ import absolute_import, unicode_literals
 
 import urllib
 import urlparse
+import hashlib
 
 from django.http.request import QueryDict
 from django.utils.encoding import iri_to_uri
 
 
 class UrlHelper(object):
+    _hash = None
+
     def __init__(self, full_path):
         # parse the path
         r = urlparse.urlparse(full_path)
@@ -22,6 +25,7 @@ class UrlHelper(object):
         return self.query_dict
 
     def update_query_data(self, **kwargs):
+        self._hash = None
         for key in kwargs:
             val = kwargs[key]
             if hasattr(val, '__iter__'):
@@ -48,11 +52,21 @@ class UrlHelper(object):
         return urllib.quote_plus(self.get_full_path(**kwargs), safe='/')
 
     @property
+    def hash(self):
+        if self._hash:
+            return self._hash
+        md5 = hashlib.md5()
+        md5.update(self.get_full_path())
+        self._hash = md5.hexdigest()
+        return self._hash
+
+    @property
     def query(self):
         return self.get_query_data()
 
     @query.setter
     def query(self, value):
+        self._hash = None
         if type(value) is dict:
             self.query_dict = QueryDict('', mutable=True)
             self.update_query_data(**value)
@@ -65,6 +79,7 @@ class UrlHelper(object):
 
     @query_string.setter
     def query_string(self, value):
+        self._hash = None
         self.query_dict = QueryDict(value, mutable=True)
 
     def __str__(self):

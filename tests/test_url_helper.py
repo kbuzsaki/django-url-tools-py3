@@ -101,3 +101,18 @@ class UrlHelperTestCase(TestCase):
         u.query = dict(foo=1, bar=2)
         u.fragment = 'baz'
         self.assertEqual(str(u), '/foo/bar?foo=1&bar=2#baz')
+
+    def test_use_with_URL_as_param_value(self):
+        u = UrlHelper('/foo/bar/')
+        u.query = {'redir': '/foo/bar/baz?test=1'}
+        self.assertEqual(u.get_full_path(),
+                         '/foo/bar/?redir=%2Ffoo%2Fbar%2Fbaz%3Ftest%3D1')
+
+    def test_hashing_basically_works(self):
+        u = UrlHelper('/foo/bar/')
+        self.assertEqual(u.hash, '1c184f3891344400380281315d9e7388')
+
+    def test_hashling_with_query_string(self):
+        u = UrlHelper('/foo/bar')
+        u.query = dict(foo=1)
+        self.assertEqual(u.hash, '06f0a42bdd474f053fb1343165a31d42')
