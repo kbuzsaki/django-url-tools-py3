@@ -147,7 +147,7 @@ Python iterables such as lists or tuples. For example::
 
     u = UrlHelper('/foo')
     u.update_query_data(bar=[1, 2, 3])
-    u.query_string  # returns '/foo?bar=1&bar=2&bar=3'
+    u.query_string  # returns 'bar=1&bar=2&bar=3'
 
 UrlHelper.get_path()
 --------------------
@@ -169,6 +169,29 @@ UrlHelper.get_full_quoted_path(**kwargs)
 
 Same as ``UrlHelper.get_full_path()`` method, but returns the full path quoted
 so that it can be used as an URL parameter value.
+
+UrlHelper.del_param(param)
+--------------------------
+
+Delete a single query parameter. ::
+
+    u = UrlHelper('/foo?bar=1&baz=2')
+    u.del_param('baz')
+    u.get_full_path() # returns '/foo?bar=1'
+
+UrlHelper.del_params([param, param...])
+---------------------------------------
+
+Delete multiple parameters. If no parameters are specified, _all_ parameters
+are removed. ::
+
+    u = UrlHelper('/foo?bar=1&baz=2&foo=3')
+    u.del_params('foo', 'bar')
+    u.get_full_path() # returns '/foo?baz=2'
+
+    u = UrlHelper('/foo?bar=1&baz=2&foo=3')
+    u.del_params()
+    u.get_full_path() # returns '/foo'
 
 ContextProcessors
 =================
