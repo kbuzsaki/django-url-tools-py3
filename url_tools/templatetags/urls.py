@@ -9,7 +9,8 @@ register = template.Library()
 
 @register.simple_tag
 def add_params(url, **kwargs):
-    url = UrlHelper(url)
+    if type(url) in [str, unicode]:
+        url = UrlHelper(url)
     url.update_query_data(**kwargs)
     return url.get_full_path()
 
