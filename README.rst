@@ -65,6 +65,7 @@ The class has following properties:
 + ``query_dict``: ``QueryDict`` instance containing the URL's query parameters
 + ``query``: similar to ``query_dict`` but also does more when assigning
 + ``query_string``: URL's query string
++ ``hash``: MD5 hexdigest of the full path including query parameters
 
 UrlHelper.path
 --------------
@@ -109,6 +110,17 @@ to this property. ::
     u.query_string = 'foo=1&bar=2'       # this works
     u.query_string = dict(foo=1, bar=2)  # but this doesn't
 
+UrlHelper.hash
+--------------
+
+Returns the MD5 hexdigest of the full path including query parameters. This can
+be useful for use with caching and other situations where we need to
+differentiate same paths with different query parameters. ::
+
+    u = UrlHelper('/foo/bar')
+    u.query = dict(foo=1) # URL is now '/foo/bar?foo=1'
+    u.hash  # returns '06f0a42bdd474f053fb1343165a31d42'
+
 UrlHelper.get_query_string(**kwargs)
 ------------------------------------
 
@@ -135,7 +147,7 @@ Python iterables such as lists or tuples. For example::
 
     u = UrlHelper('/foo')
     u.update_query_data(bar=[1, 2, 3])
-    u.query_string  # returns '/foo?bar=1&bar=2&bar=3'
+    u.query_string  # returns 'bar=1&bar=2&bar=3'
 
 UrlHelper.get_path()
 --------------------
@@ -157,6 +169,29 @@ UrlHelper.get_full_quoted_path(**kwargs)
 
 Same as ``UrlHelper.get_full_path()`` method, but returns the full path quoted
 so that it can be used as an URL parameter value.
+
+UrlHelper.del_param(param)
+--------------------------
+
+Delete a single query parameter. ::
+
+    u = UrlHelper('/foo?bar=1&baz=2')
+    u.del_param('baz')
+    u.get_full_path() # returns '/foo?bar=1'
+
+UrlHelper.del_params([param, param...])
+---------------------------------------
+
+Delete multiple parameters. If no parameters are specified, _all_ parameters
+are removed. ::
+
+    u = UrlHelper('/foo?bar=1&baz=2&foo=3')
+    u.del_params('foo', 'bar')
+    u.get_full_path() # returns '/foo?baz=2'
+
+    u = UrlHelper('/foo?bar=1&baz=2&foo=3')
+    u.del_params()
+    u.get_full_path() # returns '/foo'
 
 ContextProcessors
 =================
@@ -186,8 +221,45 @@ To use the template tags, first load the ``urls`` library::
 
 URL tools currently has only one template tag, which is an assignment tag.
 
+{% add_params %}
+----------------
+
+This template tag outputs a path with query string parameters given as keyword
+arguments. For instance, if we are on a page at ``/foo``, we can use this tag::
+
+    {% add_params request.get_full_path foo='bar' %}
+
+and the output would be::
+
+    /foo?foo=bar
+
+Existing URL parameters are overridden by the ones specified as keyword
+arguments.
+
+{% del_params %}
+----------------
+
+This tag outputs a path stripped of specified parameters, or all query 
+parameters if none are specified. For example, if we are on the
+``/foo?bar=1&baz=2`` URL::
+
+    {% del_param request.get_full_path 'bar' %}
+
+outputs::
+
+    /foo?baz=2
+
+and ::
+
+    {% del_params request.get_full_path %}
+
+outputs::
+
+    /foo
+
+
 {% url_params %}
----------------------
+----------------
 
 This tag is used as an assignment tag. Its first argument is an URL, followed
 by any number of keyword arguments that represent the URL parameters. For

@@ -101,3 +101,38 @@ class UrlHelperTestCase(TestCase):
         u.query = dict(foo=1, bar=2)
         u.fragment = 'baz'
         self.assertEqual(str(u), '/foo/bar?foo=1&bar=2#baz')
+
+    def test_use_with_URL_as_param_value(self):
+        u = UrlHelper('/foo/bar/')
+        u.query = {'redir': '/foo/bar/baz?test=1'}
+        self.assertEqual(u.get_full_path(),
+                         '/foo/bar/?redir=%2Ffoo%2Fbar%2Fbaz%3Ftest%3D1')
+
+    def test_hashing_basically_works(self):
+        u = UrlHelper('/foo/bar/')
+        self.assertEqual(u.hash, '1c184f3891344400380281315d9e7388')
+
+    def test_hashling_with_query_string(self):
+        u = UrlHelper('/foo/bar')
+        u.query = dict(foo=1)
+        self.assertEqual(u.hash, '06f0a42bdd474f053fb1343165a31d42')
+
+    def test_delete_key(self):
+        u = UrlHelper('/foo/bar?foo=1&bar=2')
+        u.del_param('foo')
+        self.assertEqual(u.get_full_path(), '/foo/bar?bar=2')
+
+    def test_delete_multiple_keys(self):
+        u = UrlHelper('/foo/bar?foo=1&bar=2')
+        u.del_params('foo', 'bar')
+        self.assertEqual(u.get_full_path(), '/foo/bar')
+
+    def test_delete_fails_silently(self):
+        u = UrlHelper('/foo/bar?foo=1&bar=2')
+        u.del_params('foo', 'baz')  # baz doesn't exist
+        self.assertEqual(u.get_full_path(), '/foo/bar?bar=2')
+
+    def test_delete_multiple_without_arguments(self):
+        u = UrlHelper('/foo/bar?foo=1&bar=2')
+        u.del_params()
+        self.assertEqual(u.get_full_path(), '/foo/bar')
