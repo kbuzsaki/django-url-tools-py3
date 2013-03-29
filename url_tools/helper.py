@@ -58,6 +58,9 @@ class UrlHelper(object):
             pass # Fail silently
 
     def del_params(self, *params):
+        if not params:
+            self.query = {}
+            return
         for param in params:
             self.del_param(param)
 
