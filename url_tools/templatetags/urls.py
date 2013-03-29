@@ -11,8 +11,11 @@ register = template.Library()
 def add_params(url, **kwargs):
     if type(url) in [str, unicode]:
         url = UrlHelper(url)
-    url.update_query_data(**kwargs)
-    return url.get_full_path()
+    try:
+        url.update_query_data(**kwargs)
+        return url.get_full_path()
+    except:
+        return ''
 
 
 @register.assignment_tag
