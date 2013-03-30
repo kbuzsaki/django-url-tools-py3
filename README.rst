@@ -287,6 +287,33 @@ desired value::
     {% url_params current_url page=2 %}
     {# this works for both ``/foo?page=1`` and just ``/foo`` #}
 
+Template filters
+================
+
+URL tools also include filters for manipulating data that will be used as part
+of URLs. To use them, you need to load the ``urls`` library first::
+
+    {% load urls %}
+
+quote
+-----
+
+The ``quote`` filter quotes URL parameters. It accepts optional safe characters
+that can be used to prevent quoting of certain characters. This filter uses
+`urllib.quote`_ for quoting. Safe characters inlude only the slash ``/`` by
+default. ::
+
+    {{ value|quote:"~/" }}
+
+quote_plus
+----------
+
+The ``quote_plus`` filter is similart ot the `quote`_ filter, except that it
+converts all spaces to ``+``. This filter also takes optional safe 
+characters. The filter uses `urllib.quote_plus`_ for quoting. ::
+
+    {{ value|quote_plus }}
+
 Reporting bugs
 ==============
 
@@ -294,3 +321,5 @@ Please report any bugs to our BitBucket `issue tracker`_.
 
 .. _Django documentation on QueryDict: https://docs.djangoproject.com/en/dev/ref/request-response/?from=olddocs#querydict-objects
 .. _issue tracker: https://bitbucket.org/monwara/django-url-tools/issues
+.. _urllib.quote: http://docs.python.org/2/library/urllib.html#urllib.quote
+.. _urllib.quote_plus: http://docs.python.org/2/library/urllib.html#urllib.quote_plus
