@@ -4,7 +4,7 @@ setup(
     name='django-url-tools',
     description='Django helpers for dealing with URLs in templates',
     long_description=open('README.rst').read(),
-    version='0.0.5',
+    version='0.0.6',
     packages=['url_tools', 'url_tools.templatetags'],
     author='Monwara LLC',
     author_email='branko@monwara.com',

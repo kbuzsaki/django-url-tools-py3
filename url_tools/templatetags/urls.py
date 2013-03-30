@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+import urllib
+
 from django import template
 
 from ..helper import UrlHelper
@@ -37,3 +39,12 @@ def url_params(url, **kwargs):
     u.update_query_data(**kwargs)
     return u.get_full_path()
 
+
+@register.filter(name='quote')
+def quote_param(value, safe='/'):
+    return urllib.quote(value, safe)
+
+
+@register.filter(name='quote_plus')
+def quote_param_plus(value, safe='/'):
+    return urllib.quote_plus(value, safe)
