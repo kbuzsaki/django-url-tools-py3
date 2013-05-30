@@ -4,7 +4,10 @@ import urllib
 import urlparse
 import hashlib
 
-from django.http.request import QueryDict
+try:
+    from django.http.request import QueryDict
+except ImportError: # django 1.4.2
+    from django.http import QueryDict
 from django.utils.encoding import iri_to_uri
 
 
@@ -47,6 +50,20 @@ class UrlHelper(object):
 
     def get_full_quoted_path(self, **kwargs):
         return urllib.quote_plus(self.get_full_path(**kwargs), safe='/')
+
+    def insert_params(self, **kwargs):
+        for key, val in kwargs.iteritems():
+            uniques = set(self.query_dict.getlist(key))
+            uniques.add(val)
+            self.query_dict.setlist(key, list(uniques))
+        return self.path
+
+    def remove_params(self, **kwargs):
+        for key, val in kwargs.iteritems():
+            to_keep = [x for x in self.query_dict.getlist(key) if not x.startswith(val)]
+            self.query_dict.setlist(key, to_keep)
+        return self.path
+
 
     def del_param(self, param):
         try:
