@@ -32,6 +32,12 @@ def del_params(url, *args):
     except:
         return ''
     
+@register.filter
+def suppr_param(url, arg):
+    return del_params(url, arg)
+    
+    
+    
 @register.simple_tag
 def insert_params(url, **kwargs):
     if type(url) == UrlHelper:
