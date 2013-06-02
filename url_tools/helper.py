@@ -61,27 +61,25 @@ class UrlHelper(object):
             uniques = set(self.query_dict.getlist(key))
             uniques.add(val)
             self.query_dict.setlist(key, list(uniques))
-        return self.path
-
-    def remove_params(self, **kwargs):
-        for key, val in kwargs.iteritems():
-            to_keep = [x for x in self.query_dict.getlist(key) if not x.startswith(val)]
-            self.query_dict.setlist(key, to_keep)
-        return self.path
-
 
     def del_param(self, param):
         try:
             del self.query_dict[param]
         except KeyError:
-            pass # Fail silently
+            pass  # Fail silently
 
-    def del_params(self, *params):
-        if not params:
+    def del_params(self, *params, **kwargs):
+        if not params and not kwargs:
             self.query = {}
             return
-        for param in params:
-            self.del_param(param)
+        if params:
+            for param in params:
+                self.del_param(param)
+        if kwargs:
+            for key, val in kwargs.iteritems():
+                to_keep = [x for x in self.query_dict.getlist(key)
+                           if not x.startswith(val)]
+                self.query_dict.setlist(key, to_keep)
 
     @property
     def hash(self):

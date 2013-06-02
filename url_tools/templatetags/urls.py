@@ -20,18 +20,13 @@ def add_params(url, **kwargs):
 
 
 @register.simple_tag
-def del_params(url, *args):
+def del_params(url, *args, **kwargs):
     url = UrlHelper(url)
     try:
-        url.del_params(*args)
+        url.del_params(*args, **kwargs)
         return url.get_full_path()
     except:
         return ''
-
-
-@register.filter
-def suppr_param(url, arg):
-    return del_params(url, arg)
 
     
 @register.simple_tag
@@ -39,15 +34,6 @@ def overload_params(url, **kwargs):
     url = UrlHelper(url)
     try:
         url.overload_params(**kwargs)
-        return url.get_full_path()
-    except:
-        return ''
-
-@register.simple_tag
-def remove_params(url, **kwargs):
-    url = UrlHelper(url)
-    try:
-        url.remove_params(**kwargs)
         return url.get_full_path()
     except:
         return ''
