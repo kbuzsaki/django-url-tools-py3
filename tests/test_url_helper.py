@@ -136,3 +136,8 @@ class UrlHelperTestCase(TestCase):
         u = UrlHelper('/foo/bar?foo=1&bar=2')
         u.del_params()
         self.assertEqual(u.get_full_path(), '/foo/bar')
+
+    def test_url_helper_instance_as_argument(self):
+        u1 = UrlHelper('/foo/bar?foo=1&bar=2')
+        u2 = UrlHelper(u1)
+        self.assertEqual(u2.get_full_path(), '/foo/bar?foo=1&bar=2')

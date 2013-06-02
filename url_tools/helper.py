@@ -8,11 +8,16 @@ try:
     from django.http.request import QueryDict
 except ImportError: # django 1.4.2
     from django.http import QueryDict
+
 from django.utils.encoding import iri_to_uri
 
 
 class UrlHelper(object):
     def __init__(self, full_path):
+        # If full_path is an UrlHelper instance, extract the full path from it
+        if type(full_path) is UrlHelper:
+            full_path = full_path.get_full_path()
+
         # parse the path
         r = urlparse.urlparse(full_path)
         self.path = r.path
