@@ -58,6 +58,9 @@ dealing with paths instead. Therefore, if you pass UrlHelper an full URL with
 scheme, host, port, and user credentials, it would still only use the path,
 query parameters, and the fragment identifiers.
 
+You can also pass an instance of ``UrlHelper`` class to the constructor if you
+need to do so.
+
 The class has following properties:
 
 + ``path``: URL's path without query string and fragment identifier
@@ -149,6 +152,17 @@ Python iterables such as lists or tuples. For example::
     u.update_query_data(bar=[1, 2, 3])
     u.query_string  # returns 'bar=1&bar=2&bar=3'
 
+UrlHelper.overload_params(**kwargs)
+-----------------------------------
+
+This method adds query parameters. As its name suggests, it will not update
+existing keys, but instead add new values for the existing parameters. Here is
+a simple example::
+
+    u = UrlHelper('/foo')
+    u.overload_params(bar=1)  # /foo?bar=1
+    u.overload_params(bar=2)  # /foo?bar=1&bar=2
+
 UrlHelper.get_path()
 --------------------
 
@@ -179,11 +193,12 @@ Delete a single query parameter. ::
     u.del_param('baz')
     u.get_full_path() # returns '/foo?bar=1'
 
-UrlHelper.del_params([param, param...])
+UrlHelper.del_params(*params, **kwargs)
 ---------------------------------------
 
 Delete multiple parameters. If no parameters are specified, _all_ parameters
-are removed. ::
+are removed. You can also specify a set of key-value pairs to remove specific
+parameters with specified _values_. Here are a few examples::
 
     u = UrlHelper('/foo?bar=1&baz=2&foo=3')
     u.del_params('foo', 'bar')
@@ -192,6 +207,10 @@ are removed. ::
     u = UrlHelper('/foo?bar=1&baz=2&foo=3')
     u.del_params()
     u.get_full_path() # returns '/foo'
+
+    u = UrlHelper('/foo?bar=1&bar=2')
+    u.del_params(bar=2)
+    u.get_full_path() # returns '/foo?bar=1'
 
 ContextProcessors
 =================
@@ -236,12 +255,27 @@ and the output would be::
 Existing URL parameters are overridden by the ones specified as keyword
 arguments.
 
+{% overload_params %}
+---------------------
+
+Similar to ``{% add_params %}`` tag, except that it does not update existing
+parameters but overloads them with new values. For example, if we are on a
+page at ``/foo?bar=1``, we can use this tag like so::
+
+    {% overload_params request.get_full_path bar=2 %}
+
+and the output would be::
+
+    /foo?bar=1&bar=2
+
 {% del_params %}
 ----------------
 
 This tag outputs a path stripped of specified parameters, or all query 
-parameters if none are specified. For example, if we are on the
-``/foo?bar=1&baz=2`` URL::
+parameters if none are specified. If you use keyword arguments, only the
+specified name-value pairs will be removed.
+
+For example, if we are on the ``/foo?bar=1&bar=2&baz=2`` URL::
 
     {% del_param request.get_full_path 'bar' %}
 
@@ -257,6 +291,13 @@ outputs::
 
     /foo
 
+Finally::
+
+    {% del_params request.get_full_path bar=2 %}
+
+outputs::
+
+    /foo?bar=1&baz=2
 
 {% url_params %}
 ----------------
@@ -319,7 +360,16 @@ Reporting bugs
 
 Please report any bugs to our BitBucket `issue tracker`_.
 
+Contributors
+============
+
+We thank the following contributors:
+
++ nlaurance_ for contributing the ``overload_params`` and improvements to
+  ``del_params``, as well as compatibility with Django 1.4.x.
+
 .. _Django documentation on QueryDict: https://docs.djangoproject.com/en/dev/ref/request-response/?from=olddocs#querydict-objects
 .. _issue tracker: https://bitbucket.org/monwara/django-url-tools/issues
 .. _urllib.quote: http://docs.python.org/2/library/urllib.html#urllib.quote
 .. _urllib.quote_plus: http://docs.python.org/2/library/urllib.html#urllib.quote_plus
+.. _nlaurance: https://bitbucket.org/nlaurance
