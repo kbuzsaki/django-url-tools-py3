@@ -1,3 +1,9 @@
+2013-06-02 Released 0.0.7
+=========================
+
+- overload_params and improvement to del_params (nlaurance)
+- compatibility with Django 1.4.x (nlaurance)
+
 2013-03-05 Released 0.0.1
 =========================
 
