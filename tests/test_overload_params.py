@@ -2,20 +2,20 @@ from __future__ import absolute_import, unicode_literals
 
 from unittest import TestCase
 
-from url_tools.templatetags.urls import insert_params 
-from url_tools.helper import UrlHelper
+from url_tools.templatetags.urls import overload_params
 
 
-class InsertParamsTestCase(TestCase):
-    def test_insert_params_basic(self):
+class overloadParamsTestCase(TestCase):
+    def test_overload_params_basic(self):
         self.assertEqual(
-            insert_params('/search/?q=something&selected_facets=second%3Abar',
+            overload_params('/search/?q=something&selected_facets=second%3Abar',
                            selected_facets='first:foo'),
             '/search/?q=something&selected_facets=second%3Abar&selected_facets=first%3Afoo'
-        )    
-    def test_insert_params_duplicate(self):
+        )
+
+    def test_overload_params_duplicate(self):
         self.assertEqual(
-            insert_params('/search/?q=something&selected_facets=second%3Abar&selected_facets=first%3Afoo',
+            overload_params('/search/?q=something&selected_facets=second%3Abar&selected_facets=first%3Afoo',
                            selected_facets='first:foo'),
             '/search/?q=something&selected_facets=second%3Abar&selected_facets=first%3Afoo'
         )

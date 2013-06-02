@@ -56,7 +56,7 @@ class UrlHelper(object):
     def get_full_quoted_path(self, **kwargs):
         return urllib.quote_plus(self.get_full_path(**kwargs), safe='/')
 
-    def insert_params(self, **kwargs):
+    def overload_params(self, **kwargs):
         for key, val in kwargs.iteritems():
             uniques = set(self.query_dict.getlist(key))
             uniques.add(val)
