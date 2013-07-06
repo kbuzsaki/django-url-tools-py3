@@ -146,3 +146,18 @@ class UrlHelperTestCase(TestCase):
         u1 = UrlHelper('/foo/bar?foo=1&bar=2')
         u2 = UrlHelper(u1)
         self.assertEqual(u2.get_full_path(), '/foo/bar?foo=1&bar=2')
+
+    def test_toggle_params_disable(self):
+        u = UrlHelper('/foo/bar?foo=1')
+        u.toggle_params(foo=1)
+        self.assertEqual(u.get_full_path(), '/foo/bar')
+
+    def test_toggle_params_enable(self):
+        u = UrlHelper('/foo/bar?foo=1')
+        u.toggle_params(bar=1)
+        self.assertEqual(u.get_full_path(), '/foo/bar?foo=1&bar=1')
+
+    def test_toggle_params_toggle_multiple(self):
+        u = UrlHelper('/foo/bar?foo=1')
+        u.toggle_params(foo=1, bar=1)
+        self.assertEqual(u.get_full_path(), '/foo/bar?bar=1')

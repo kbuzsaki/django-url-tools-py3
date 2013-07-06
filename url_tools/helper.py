@@ -81,6 +81,14 @@ class UrlHelper(object):
                            if not x.startswith(val)]
                 self.query_dict.setlist(key, to_keep)
 
+    def toggle_params(self, **params):
+        for param, value in params.items():
+            value = unicode(value)
+            if value in self.query_dict.getlist(param):
+                self.del_params(**{param: value})
+            else:
+                self.overload_params(**{param: value})
+
     @property
     def hash(self):
         md5 = hashlib.md5()

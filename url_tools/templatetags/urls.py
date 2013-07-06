@@ -46,6 +46,13 @@ def url_params(url, **kwargs):
     return u.get_full_path()
 
 
+@register.simple_tag
+def toggle_params(url, **kwargs):
+    u = UrlHelper(url)
+    u.toggle_params(**kwargs)
+    return u.get_full_path()
+
+
 @register.filter(name='quote')
 def quote_param(value, safe='/'):
     return urllib.quote(value, safe)
