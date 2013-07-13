@@ -163,6 +163,19 @@ a simple example::
     u.overload_params(bar=1)  # /foo?bar=1
     u.overload_params(bar=2)  # /foo?bar=1&bar=2
 
+UrlHelper.toggle_params(**kwargs)
+-----------------------------------
+
+This method adds or removes query parameters depending on whether they
+already exist. It looks for both a matching parameter and value, and
+adds new parameters using ``UrlHelper.overload_params``. Here is
+a simple example::
+
+    u = UrlHelper('/foo')
+    u.toggle_params(bar=1)  # /foo?bar=1
+    u.toggle_params(bar=1, foo=2)  # /foo?foo=2
+    u.toggle_params(bar=1, bar=2)  # /foo?bar=1&bar=2&foo=2
+    
 UrlHelper.get_path()
 --------------------
 
@@ -298,6 +311,32 @@ Finally::
 outputs::
 
     /foo?bar=1&baz=2
+
+{% toggle_params %}
+---------------------
+
+This tag adds or removes parameters, depending on whether the parameter and
+value exists.  For example, if we are on a page at ``/foo?bar=1``, we can 
+toggle the state of ``bar=1`` using::
+
+    {% toggle_params request.get_full_path bar=1 %}
+
+and the output would be::
+
+    /foo
+    
+If we are on a page at ``/foo``, then the output of would be::
+
+    /foo?bar=1
+    
+Multiple parameters and values can be used.  For example, on a page at
+``/foo?bar=1&foo=2``, parameters can be toggled like this::
+
+    {% toggle_params request.get_full_path bar=3 foo=2 foo=3 %}
+    
+To give::
+
+    /foo?bar=1&bar=3&foo=3
 
 {% url_params %}
 ----------------
