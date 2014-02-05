@@ -34,9 +34,9 @@ class UrlHelper(object):
         for key in kwargs:
             val = kwargs[key]
             if hasattr(val, '__iter__'):
-                self.query_dict.setlist(key, [iri_to_uri(v) for v in val])
+                self.query_dict.setlist(key, [v for v in val])
             else:
-                self.query_dict[key] = iri_to_uri(val)
+                self.query_dict[key] = val
 
     def get_path(self):
         return self.path
