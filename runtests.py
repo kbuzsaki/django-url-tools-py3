@@ -3,7 +3,7 @@
 import sys
 from os.path import dirname, abspath
 
-from django.conf import settings, global_settings
+from django.conf import settings
 
 from nose.plugins.plugintest import run_buffered as run
 
@@ -40,4 +40,3 @@ def runtests(*test_args, **kwargs):
 
 if __name__ == '__main__':
     runtests()
-
