@@ -27,6 +27,11 @@ class UrlHelperTestCase(TestCase):
         self.assertEqual(u.get_query_data()['foo'], '3')
         self.assertEqual(u.get_query_data().getlist('foo'), ['1', '2', '3'])
 
+    def test_update_query_data_with_correct_escaping(self):
+        u = UrlHelper('/foo?foo=1&bar=2')
+        u.update_query_data(foo='space here!')
+        self.assertEqual(u.query_string, u'foo=space+here%21&bar=2')
+
     def test_get_query_string_after_modification(self):
         u = UrlHelper('/foo?foo=1&bar=2')
         u.update_query_data(foo=2)
