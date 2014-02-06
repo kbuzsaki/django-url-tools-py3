@@ -6,7 +6,7 @@ import hashlib
 
 try:
     from django.http.request import QueryDict
-except ImportError: # django 1.4.2
+except ImportError:  # django 1.4.2
     from django.http import QueryDict
 
 from django.utils.encoding import iri_to_uri
@@ -31,12 +31,11 @@ class UrlHelper(object):
         return self.query_dict
 
     def update_query_data(self, **kwargs):
-        for key in kwargs:
-            val = kwargs[key]
+        for key, val in kwargs.iteritems():
             if hasattr(val, '__iter__'):
-                self.query_dict.setlist(key, [iri_to_uri(v) for v in val])
+                self.query_dict.setlist(key, val)
             else:
-                self.query_dict[key] = iri_to_uri(val)
+                self.query_dict[key] = val
 
     def get_path(self):
         return self.path

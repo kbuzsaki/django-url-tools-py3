@@ -19,13 +19,18 @@ class UrlHelperTestCase(TestCase):
     def test_update_query_data(self):
         u = UrlHelper('/foo?foo=1&bar=2')
         u.update_query_data(foo=2)
-        self.assertEqual(u.get_query_data()['foo'], '2')
+        self.assertEqual(u.get_query_data()['foo'], 2)
 
     def test_update_query_data_with_multiple_values(self):
         u = UrlHelper('/foo?foo=1&bar=2')
-        u.update_query_data(foo=[1,2,3])
-        self.assertEqual(u.get_query_data()['foo'], '3')
-        self.assertEqual(u.get_query_data().getlist('foo'), ['1', '2', '3'])
+        u.update_query_data(foo=[1, 2, 3])
+        self.assertEqual(u.get_query_data()['foo'], 3)
+        self.assertEqual(u.get_query_data().getlist('foo'), [1, 2, 3])
+
+    def test_update_query_data_with_correct_escaping(self):
+        u = UrlHelper('/foo?foo=1&bar=2')
+        u.update_query_data(foo='space here!')
+        self.assertEqual(u.query_string, u'foo=space+here%21&bar=2')
 
     def test_get_query_string_after_modification(self):
         u = UrlHelper('/foo?foo=1&bar=2')
@@ -73,7 +78,7 @@ class UrlHelperTestCase(TestCase):
     def test_query_setter(self):
         u = UrlHelper('/foo')
         u.query = dict(foo=1)
-        self.assertEqual(u.query['foo'], '1')
+        self.assertEqual(u.query['foo'], 1)
 
     def test_query_setter_with_string(self):
         u = UrlHelper('/foo')
