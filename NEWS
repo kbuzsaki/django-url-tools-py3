@@ -1,3 +1,9 @@
+2013-02-06 Released 0.0.8
+=========================
+
+- fix for #2 (Marc Kirkwood, and hjkelly)
+- toggle_params method (David Townshend)
+
 2013-06-02 Released 0.0.7
 =========================
 
