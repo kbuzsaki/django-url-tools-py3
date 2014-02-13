@@ -189,13 +189,19 @@ UrlHelper.get_full_path(**kwargs)
 Returns the full path with query string and fragment identifier (if any). The
 keyword arguments passed to this function are passed onto 
 ``UrlHelper.get_query_string()`` method, and therefore to
-``QueryDict.urlencode()`` method.
+``QueryDict.urlencode()`` method. Not that using the ``safe`` parameters with
+query parameter values that contain unicode characters _will_ break your app.
+See [issue #4](https://bitbucket.org/monwara/django-url-tools/issue/4/) for
+more information.
 
 UrlHelper.get_full_quoted_path(**kwargs)
 ----------------------------------------
 
 Same as ``UrlHelper.get_full_path()`` method, but returns the full path quoted
-so that it can be used as an URL parameter value.
+so that it can be used as an URL parameter value. As with ``get_full_path()``
+method, the arguments are passed onto ``QueryDict.urlencode()`` method, and the
+same restriction about the unicode values in query parameters apply when using
+the ``safe`` argument.
 
 UrlHelper.del_param(param)
 --------------------------
@@ -385,6 +391,8 @@ default. ::
 
     {{ value|quote:"~/" }}
 
+Note that using unicode characters with this filter may not work.
+
 quote_plus
 ----------
 
@@ -393,6 +401,8 @@ converts all spaces to ``+``. This filter also takes optional safe
 characters. The filter uses `urllib.quote_plus`_ for quoting. ::
 
     {{ value|quote_plus }}
+
+Note that using unicode characters with this filter may not work.
 
 Reporting bugs
 ==============
