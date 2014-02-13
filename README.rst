@@ -426,5 +426,5 @@ We thank the following contributors (in no particular order):
 .. _urllib.quote_plus: http://docs.python.org/2/library/urllib.html#urllib.quote_plus
 .. _nlaurance: https://bitbucket.org/nlaurance
 .. _David Townshend: https://bitbucket.org/aquavitae
-.. _Mark Kirkwood: https://bitbucket.org/trojjer
+.. _Marc Kirkwood: https://bitbucket.org/trojjer
 .. _iaa: https://github.com/iaa
