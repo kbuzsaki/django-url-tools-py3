@@ -416,7 +416,7 @@ We thank the following contributors (in no particular order):
 
 + nlaurance_ for contributing the ``overload_params`` and improvements to
   ``del_params``, as well as compatibility with Django 1.4.x.
-+ `David Townshend` for ``toggle_param`` method and tag.
++ `David Townshend`_ for ``toggle_param`` method and tag.
 + `Marc Kirkwood`_ for fix on ``update_query_data``.
 + `iaa`_ for unicode-related unit tests
 
