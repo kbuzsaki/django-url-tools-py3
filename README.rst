@@ -402,13 +402,19 @@ Please report any bugs to our BitBucket `issue tracker`_.
 Contributors
 ============
 
-We thank the following contributors:
+We thank the following contributors (in no particular order):
 
 + nlaurance_ for contributing the ``overload_params`` and improvements to
   ``del_params``, as well as compatibility with Django 1.4.x.
++ `David Townshend` for ``toggle_param`` method and tag.
++ `Marc Kirkwood`_ for fix on ``update_query_data``.
++ `iaa`_ for unicode-related unit tests
 
 .. _Django documentation on QueryDict: https://docs.djangoproject.com/en/dev/ref/request-response/?from=olddocs#querydict-objects
 .. _issue tracker: https://bitbucket.org/monwara/django-url-tools/issues
 .. _urllib.quote: http://docs.python.org/2/library/urllib.html#urllib.quote
 .. _urllib.quote_plus: http://docs.python.org/2/library/urllib.html#urllib.quote_plus
 .. _nlaurance: https://bitbucket.org/nlaurance
+.. _David Townshend: https://bitbucket.org/aquavitae
+.. _Mark Kirkwood: https://bitbucket.org/trojjer
+.. _iaa: https://github.com/iaa
