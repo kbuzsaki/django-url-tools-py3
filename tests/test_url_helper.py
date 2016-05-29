@@ -207,14 +207,14 @@ class UrlHelperTestCase(TestCase):
         u = UrlHelper('/foo/bar')
         u.query = dict(foo=1, bar=2)
         u.fragment = 'baz'
-        self.assertEqual(str(u), '/foo/bar?foo=1&bar=2#baz')
+        self.assertEqual(str(u), '/foo/bar?bar=2&foo=1#baz')
 
     def test_use_as_string_unicode(self):
         u = UrlHelper('/foo/bar')
         u.query = dict(foo='слово', bar=2)
         u.fragment = 'baz'
         self.assertEqual(str(u),
-                         '/foo/bar?foo=%D1%81%D0%BB%D0%BE%D0%B2%D0%BE&bar=2#'
+                         '/foo/bar?bar=2&foo=%D1%81%D0%BB%D0%BE%D0%B2%D0%BE#'
                          'baz')
 
     def test_use_with_URL_as_param_value(self):
