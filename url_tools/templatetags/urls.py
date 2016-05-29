@@ -1,6 +1,6 @@
-from __future__ import absolute_import, unicode_literals
 
-import urllib
+
+import urllib.request, urllib.parse, urllib.error
 
 from django import template
 
@@ -55,9 +55,9 @@ def toggle_params(url, **kwargs):
 
 @register.filter(name='quote')
 def quote_param(value, safe='/'):
-    return urllib.quote(value, safe)
+    return urllib.parse.quote(value, safe)
 
 
 @register.filter(name='quote_plus')
 def quote_param_plus(value, safe='/'):
-    return urllib.quote_plus(value, safe)
+    return urllib.parse.quote_plus(value, safe)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
+
 
 from unittest import TestCase
 
@@ -54,7 +54,7 @@ class UrlHelperTestCase(TestCase):
     def test_update_query_data_with_correct_escaping(self):
         u = UrlHelper('/foo?foo=1&bar=2')
         u.update_query_data(foo='space here!')
-        self.assertEqual(u.query_string, u'foo=space+here%21&bar=2')
+        self.assertEqual(u.query_string, 'foo=space+here%21&bar=2')
 
     def test_update_query_data_with_correct_escaping_unicode(self):
         u = UrlHelper('/foo?foo=1&bar=2')

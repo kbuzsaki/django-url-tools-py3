@@ -1,7 +1,7 @@
-from __future__ import absolute_import, unicode_literals
 
-import urllib
-import urlparse
+
+import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 import hashlib
 
 try:
@@ -19,7 +19,7 @@ class UrlHelper(object):
             full_path = full_path.get_full_path()
 
         # parse the path
-        r = urlparse.urlparse(full_path)
+        r = urllib.parse.urlparse(full_path)
         self.path = r.path
         self.fragment = r.fragment
         self.query_dict = QueryDict(r.query, mutable=True)
@@ -31,7 +31,7 @@ class UrlHelper(object):
         return self.query_dict
 
     def update_query_data(self, **kwargs):
-        for key, val in kwargs.iteritems():
+        for key, val in kwargs.items():
             if hasattr(val, '__iter__'):
                 self.query_dict.setlist(key, val)
             else:
@@ -53,10 +53,10 @@ class UrlHelper(object):
         )
 
     def get_full_quoted_path(self, **kwargs):
-        return urllib.quote_plus(self.get_full_path(**kwargs), safe='/')
+        return urllib.parse.quote_plus(self.get_full_path(**kwargs), safe='/')
 
     def overload_params(self, **kwargs):
-        for key, val in kwargs.iteritems():
+        for key, val in kwargs.items():
             uniques = set(self.query_dict.getlist(key))
             uniques.add(val)
             self.query_dict.setlist(key, list(uniques))
@@ -75,14 +75,14 @@ class UrlHelper(object):
             for param in params:
                 self.del_param(param)
         if kwargs:
-            for key, val in kwargs.iteritems():
+            for key, val in kwargs.items():
                 to_keep = [x for x in self.query_dict.getlist(key)
                            if not x.startswith(val)]
                 self.query_dict.setlist(key, to_keep)
 
     def toggle_params(self, **params):
-        for param, value in params.items():
-            value = unicode(value)
+        for param, value in list(params.items()):
+            value = str(value)
             if value in self.query_dict.getlist(param):
                 self.del_params(**{param: value})
             else:
