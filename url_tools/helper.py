@@ -127,7 +127,7 @@ class UrlHelper(object):
     @property
     def hash(self):
         md5 = hashlib.md5()
-        md5.update(self.get_full_path())
+        md5.update(self.get_full_path().encode("utf-8"))
         return md5.hexdigest()
 
     @property
