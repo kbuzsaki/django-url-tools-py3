@@ -69,7 +69,7 @@ class UrlHelper(object):
 
     def update_query_data(self, **kwargs):
         for key, val in kwargs.items():
-            if hasattr(val, '__iter__'):
+            if isinstance(val, list):
                 self.query_dict.setlist(key, val)
             else:
                 self.query_dict[key] = val
