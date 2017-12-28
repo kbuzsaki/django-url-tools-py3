@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='django-url-tools-py3',
     description='Django helpers for dealing with URLs in templates',
-    version='0.1.0.1',
+    version='0.2.0',
     packages=['url_tools', 'url_tools.templatetags'],
     author='Monwara LLC',
     author_email='branko@monwara.com',
