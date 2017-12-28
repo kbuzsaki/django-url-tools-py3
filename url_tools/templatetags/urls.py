@@ -28,7 +28,7 @@ def del_params(url, *args, **kwargs):
     except:
         return ''
 
-    
+
 @register.simple_tag
 def overload_params(url, **kwargs):
     url = UrlHelper(url)
@@ -39,7 +39,7 @@ def overload_params(url, **kwargs):
         return ''
 
 
-@register.assignment_tag
+@register.simple_tag
 def url_params(url, **kwargs):
     u = UrlHelper(url)
     u.update_query_data(**kwargs)
